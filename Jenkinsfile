@@ -7,6 +7,12 @@ pipeline {
                 // Fetch the repository from git
                 git branch: 'main', url: 'https://github.com/Douglas019BR/INF335-Jenkins-Docker'
 
+                // Verifique o conteúdo do diretório
+                sh 'ls -la'
+
+                // Verifique se o arquivo Dockerfile existe
+                sh 'cat Dockerfile'
+
                 // Create the image with the name ola-unicamp
                 sh 'docker build -t ola-unicamp .'
             }
