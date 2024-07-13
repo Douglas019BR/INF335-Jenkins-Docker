@@ -1,0 +1,132 @@
+Started by user INF335
+Obtained Jenkinsfile from git https://github.com/Douglas019BR/INF335-Jenkins-Docker.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/Trabalho5_Atividade5_2
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential 369d9897-7b5c-48e4-a762-977aaf369cf0
+Cloning the remote Git repository
+Cloning repository https://github.com/Douglas019BR/INF335-Jenkins-Docker.git
+ > git init /var/lib/jenkins/workspace/Trabalho5_Atividade5_2 # timeout=10
+Fetching upstream changes from https://github.com/Douglas019BR/INF335-Jenkins-Docker.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.32.0'
+using GIT_ASKPASS to set credentials
+ > git fetch --tags --force --progress -- https://github.com/Douglas019BR/INF335-Jenkins-Docker.git +refs/heads/:refs/remotes/origin/ # timeout=10
+ > git config remote.origin.url https://github.com/Douglas019BR/INF335-Jenkins-Docker.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/:refs/remotes/origin/ # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision b76c94afa9ce0524f2318751dc0e3691b00de843 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b76c94afa9ce0524f2318751dc0e3691b00de843 # timeout=10
+Commit message: "update jenkinsFile"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout SCM)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Trabalho5_Atividade5_2/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Douglas019BR/INF335-Jenkins-Docker # timeout=10
+Fetching upstream changes from https://github.com/Douglas019BR/INF335-Jenkins-Docker
+ > git --version # timeout=10
+ > git --version # 'git version 2.32.0'
+ > git fetch --tags --force --progress -- https://github.com/Douglas019BR/INF335-Jenkins-Docker +refs/heads/:refs/remotes/origin/ # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision b76c94afa9ce0524f2318751dc0e3691b00de843 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b76c94afa9ce0524f2318751dc0e3691b00de843 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b main b76c94afa9ce0524f2318751dc0e3691b00de843 # timeout=10
+Commit message: "update jenkinsFile"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Stage)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ ls -la
+total 32
+drwxr-xr-x  4 jenkins jenkins 4096 Jul 12 19:20 .
+drwxr-xr-x 25 jenkins jenkins 4096 Jul 12 19:20 ..
+-rw-r--r--  1 jenkins jenkins  217 Jul 12 19:20 Dockerfile
+drwxr-xr-x  8 jenkins jenkins 4096 Jul 12 19:20 .git
+-rw-r--r--  1 jenkins jenkins  231 Jul 12 19:20 .gitignore
+-rw-r--r--  1 jenkins jenkins  977 Jul 12 19:20 Jenkinsfile
+-rw-r--r--  1 jenkins jenkins   24 Jul 12 19:20 README.md
+drwxr-xr-x  3 jenkins jenkins 4096 Jul 12 19:20 src
+[Pipeline] sh
++ cat Dockerfile
+# Java image
+FROM openjdk:11
+
+# Set working directory
+WORKDIR /app
+
+# Import files
+COPY src/main/java/OlaUnicamp.java /app/
+
+# Compile Java file
+RUN javac OlaUnicamp.java
+
+# Run java command
+CMD ["java", "OlaUnicamp"]
+[Pipeline] sh
++ docker build -t ola-unicamp .
+Sending build context to Docker daemon  101.9kB
+
+Step 1/5 : FROM openjdk:11
+ ---> a6de6da8040c
+Step 2/5 : WORKDIR /app
+ ---> Running in a19c2b0115cd
+Removing intermediate container a19c2b0115cd
+ ---> 1944d3762e35
+Step 3/5 : COPY src/main/java/OlaUnicamp.java /app/
+ ---> 772640481d7e
+Step 4/5 : RUN javac OlaUnicamp.java
+ ---> Running in ea0503ad5672
+Removing intermediate container ea0503ad5672
+ ---> 7aa34794d7a8
+Step 5/5 : CMD ["java", "OlaUnicamp"]
+ ---> Running in 9a422cacb596
+Removing intermediate container 9a422cacb596
+ ---> b414ba5b24d4
+Successfully built b414ba5b24d4
+Successfully tagged ola-unicamp:latest
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Execution Stage)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker run --rm ola-unicamp
+Ola Unicamp
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] echo
+Container executed and removed successfully
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
